@@ -1,0 +1,170 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #FFF8E7;
+    color: #2E5A3B;
+    min-height: 100vh
+}
+
+.topbar {
+    background: #2E5A3B;
+    padding: 12px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2)
+}
+
+.topbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.brand {
+    color: #FFF8E7;
+    font-size: 24px;
+    font-weight: bold
+}
+
+.brand span {
+    color: #E8C84A
+}
+
+.nav {
+    display: flex;
+    gap: 16px;
+    align-items: center
+}
+
+.link {
+    color: #FFF8E7;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: 0.3s
+}
+
+.link:hover {
+    background: #88B04B
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    border: none
+}
+
+.btn-primary {
+    background: #E8C84A;
+    color: #2E5A3B
+}
+
+.btn-primary:hover {
+    background: #F4A7BB
+}
+
+.btn-primary.active {
+    background: #F4A7BB
+}
+
+.wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px
+}
+
+.panel {
+    background: #fff;
+    border-radius: 12px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1)
+}
+
+.title {
+    font-size: 28px;
+    color: #2E5A3B;
+    margin-bottom: 4px
+}
+
+.subtitle {
+    color: #8B6B4A;
+    margin-bottom: 24px
+}
+
+.text-center {
+    text-align: center
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px
+}
+
+.form label {
+    font-weight: bold;
+    color: #2E5A3B;
+    font-size: 14px
+}
+
+.form input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: 0.3s
+}
+
+.form input:focus {
+    border-color: #88B04B;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(136, 176, 75, 0.2)
+}
+
+.form .btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px
+}
+
+.error {
+    color: #F4A7BB;
+    text-align: center;
+    font-weight: bold;
+    margin: 8px 0
+}
+
+.info {
+    color: #88B04B;
+    text-align: center;
+    margin: 8px 0
+}
+
+.hint {
+    text-align: center;
+    margin-top: 20px;
+    color: #8B6B4A
+}
+
+.hint a {
+    color: #2E5A3B;
+    font-weight: bold;
+    text-decoration: none
+}
+
+.hint a:hover {
+    color: #F4A7BB
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Carrito - Cafetería Rodilla</title>
+    <link rel="stylesheet" href="css/catalogo.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar-inner">
+        <div class="brand">Rodilla <span>Café</span></div>
+        <nav class="nav">
+            <a href="catalogo.html" class="link">Catálogo</a>
+            <a href="carrito.html" class="link">Carrito</a>
+            <div class="dropdown">
+                <button class="btn-cuenta">
+                    <img src="Iconos/usuario.png" class="nav-icon" alt="">
+                    Mi Cuenta
+                    <img src="Iconos/flecha-hacia-abajo.png" class="nav-icon nav-arrow" alt="">
+                </button>
+                <div class="dropdown-menu">
+                    <a href="mi_cuenta.html" class="dropdown-item">Ver estado</a>
+                    <a href="login.html" class="dropdown-item salir">Cerrar Sesión</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main class="page">
+    <section id="empty" class="card" style="text-align:center; padding:28px; border-radius:14px; display:none">
+        <div>
+            <img src="Iconos/bolsa-de-la-compra.png" class="empty-cart-icon" alt="Carrito vacío">
+        </div>
+        <h3 style="margin:8px 0 0">Carrito vacío</h3>
+        <p class="hero-sub">No tienes productos en tu carrito. ¡Explora nuestro catálogo!</p>
+    </section>
+
+    <div id="list" class="list" style="display:none; gap:12px"></div>
+
+    <div id="summary" class="card" style="display:none; margin-top:12px; padding:14px; border-radius:12px; align-items:center; justify-content:space-between">
+        <div><strong>Total:</strong> <span id="total">S/ 0.00</span></div>
+        <div style="display:flex; gap:8px">
+            <button class="btn btn-secondary" type="button" onclick="vaciarCarrito()">Vaciar</button>
+            <button class="btn btn-primary" type="button" onclick="comprar()">Comprar</button>
+        </div>
+    </div>
+</main>
+
+<script src="js/db-config.js"></script>
+<script src="js/db-postgres.js"></script>
+<script src="js/dropdown.js"></script>
+<script src="js/carrito.js"></script>
+</body>
+</html>

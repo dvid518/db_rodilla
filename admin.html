@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Cafetería Rodilla</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="admin.html" class="brand-link">
+                <img src="Iconos/logo.png" alt="Logo" class="logo-img">
+                <h1 class="brand-text">Rodilla - Admin</h1>
+            </a>
+            <div class="nav-links">
+                <a href="admin.html" class="nav-item active">
+                    <img src="Iconos/grafico.png" class="icono-nav"> Panel
+                </a>
+                <a href="reportes.html" class="nav-item">
+                    <img src="Iconos/reporte.png" class="icono-nav"> Reportes
+                </a>
+                <a href="login.html" class="nav-item">
+                    <img src="Iconos/salir.png" class="icono-nav"> Salir
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <h2>Panel de Administración</h2>
+            <p>Gestiona productos, pedidos y clientes</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="resumen">
+                <img src="Iconos/grafico.png" class="icono-small"> Resumen
+            </button>
+            <button class="tab-btn" data-tab="productos">
+                <img src="Iconos/lista.png" class="icono-small"> Productos
+            </button>
+            <button class="tab-btn" data-tab="pedidos">
+                <img src="Iconos/caja.png" class="icono-small"> Pedidos
+            </button>
+            <button class="tab-btn" data-tab="clientes">
+                <img src="Iconos/grupo.png" class="icono-small"> Clientes
+            </button>
+        </div>
+
+        <div id="resumenContent" class="tab-content active">
+            <h3 style="margin-bottom: 1.5rem;">Resumen General</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Ingresos</h3>
+                    <div class="value" id="ingresosTotales">S/ 0.00</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Pedidos</h3>
+                    <div class="value" id="totalPedidos">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Clientes</h3>
+                    <div class="value" id="totalClientes">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Productos</h3>
+                    <div class="value" id="totalProductos">0</div>
+                </div>
+            </div>
+            <h3 style="margin: 2rem 0 1rem 0;">Pedidos Recientes</h3>
+            <div id="pedidosRecientes" style="background: #f8f9fa; border-radius: 10px; padding: 1rem;">
+                <p style="text-align: center; color: #666;">Cargando...</p>
+            </div>
+        </div>
+
+        <div id="productosContent" class="tab-content">
+            <div id="productosLista">Cargando...</div>
+        </div>
+        <div id="pedidosContent" class="tab-content">
+            <div id="pedidosLista">Cargando...</div>
+        </div>
+        <div id="clientesContent" class="tab-content">
+            <div id="clientesLista">Cargando...</div>
+        </div>
+    </div>
+
+    <div id="modalDetalle" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><img src="Iconos/caja.png" class="icono-small"> Detalle Pedido <span id="mIdPedido">#</span></h3>
+                <span class="close-btn" onclick="cerrarModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="detalle-fila"><span class="icono"><img src="Iconos/usuario.png"></span>
+                    <div><small>Cliente</small>
+                        <div id="mCliente">-</div>
+                    </div>
+                </div>
+                <div class="detalle-fila"><span class="icono"><img src="Iconos/comentario.png"></span>
+                    <div><small>Email</small>
+                        <div id="mEmail">-</div>
+                    </div>
+                </div>
+                <div class="detalle-fila"><span class="icono"><img src="Iconos/calendario.png"></span>
+                    <div><small>Fecha</small>
+                        <div id="mFecha">-</div>
+                    </div>
+                </div>
+                <div class="detalle-total"><span>Total:</span><span id="mTotal">S/ 0.00</span></div>
+            </div>
+            <div class="modal-footer"><button class="btn-cerrar" onclick="cerrarModal()">Cerrar</button></div>
+        </div>
+    </div>
+
+    <div id="modalCliente" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><img src="Iconos/grupo.png" class="icono-small"> Cliente</h3>
+                <span class="close-btn" onclick="cerrarModalCliente()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="detalle-fila"><span class="icono"><img src="Iconos/lista.png"></span>
+                    <div><small>ID</small>
+                        <div id="mcId">-</div>
+                    </div>
+                </div>
+                <div class="detalle-fila"><span class="icono"><img src="Iconos/usuario.png"></span>
+                    <div><small>Nombre</small>
+                        <div id="mcNombre">-</div>
+                    </div>
+                </div>
+                <div class="detalle-fila"><span class="icono"><img src="Iconos/comentario.png"></span>
+                    <div><small>Email</small>
+                        <div id="mcEmail">-</div>
+                    </div>
+                </div>
+                <div class="detalle-fila"><span class="icono"><img src="Iconos/telefono.png"></span>
+                    <div><small>Teléfono</small>
+                        <div id="mcTelefono">-</div>
+                    </div>
+                </div>
+                <div class="detalle-fila" style="border-bottom:none;"><span class="icono"><img
+                            src="Iconos/direccion.png"></span>
+                    <div><small>Dirección</small>
+                        <div id="mcDireccion">-</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer"><button class="btn-cerrar" onclick="cerrarModalCliente()">Cerrar</button></div>
+        </div>
+    </div>
+    <div id="formProductoContainer"></div>
+
+    <div id="modalBorrar" class="modal-overlay" style="display: none; z-index: 3000;">
+        <div class="modal-delete-content">
+            <div style="font-size: 3rem; margin-bottom: 10px;">⚠️</div>
+            <h3 style="color: #333; margin-bottom: 10px;">¿Seguro que quieres eliminar?</h3>
+            <p style="color: #666; margin-bottom: 25px;">Esta acción borrará el registro permanentemente.</p>
+            <div style="display: flex; justify-content: center; gap: 15px;">
+                <button onclick="cerrarModalBorrar()"
+                    style="padding:10px 20px; border:1px solid #ccc; background:white; border-radius:6px; cursor:pointer;">Cancelar</button>
+                <button class="btn-confirm-delete" onclick="ejecutarBorradoMaestro()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/db-config.js"></script>
+    <script src="js/db-postgres.js"></script>
+    <script src="js/panel.js"></script>
+</body>
+
+</html>

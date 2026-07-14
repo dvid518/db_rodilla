@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mi Cuenta - Cafetería Rodilla</title>
+    <link rel="stylesheet" href="css/catalogo.css">
+</head>
+
+<body class="account-bg">
+    <header class="topbar">
+        <div class="topbar-inner">
+            <div class="brand">Rodilla <span>Café</span></div>
+            <nav class="nav">
+                <a href="catalogo.html" class="link">Catálogo</a>
+                <a href="carrito.html" class="link">Carrito</a>
+                <div class="dropdown">
+                    <button class="btn-cuenta">
+                        <img src="Iconos/usuario.png" class="nav-icon" alt="">
+                        Mi Cuenta
+                        <img src="Iconos/flecha-hacia-abajo.png" class="nav-icon nav-arrow" alt="">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="mi_cuenta.html" class="dropdown-item">Ver estado</a>
+                        <a href="login.html" class="dropdown-item salir">Cerrar Sesión</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page account">
+        <section class="hero">
+            <h1 class="hero-title">Mi Cuenta</h1>
+            <p class="hero-sub">Gestiona tu información personal y revisa tus pedidos</p>
+        </section>
+
+        <div class="account-grid">
+            <section class="card-white" style="padding:16px;">
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px">
+                    <div class="avatar">
+                        <img src="Iconos/usuario.png" class="avatar-icon" alt="Perfil">
+                    </div>
+                    <div>
+                        <div id="nombre" style="font-weight:800">Usuario</div>
+                        <div class="muted">Cliente</div>
+                    </div>
+                </div>
+                <div class="muted">Email</div>
+                <div id="email" style="margin-bottom:8px">-</div>
+                <div class="muted">Teléfono</div>
+                <div id="telefono" style="margin-bottom:8px">-</div>
+                <div class="muted">Fecha de registro</div>
+                <div id="fecha">-</div>
+            </section>
+
+            <section class="card-white" style="padding:16px;">
+                <div class="block-title">
+                    <img src="Iconos/caja.png" class="section-icon" alt=""> Mis Pedidos
+                </div>
+                <div id="nop" class="empty">
+                    <img src="Iconos/caja.png" class="empty-icon" alt="Sin pedidos">
+                    <div>No tienes pedidos aún. ¡Explora nuestro catálogo!</div>
+                </div>
+                <div id="pedidos" class="list" style="margin-top:6px; gap:10px"></div>
+            </section>
+
+            <section class="card-white" style="padding:16px;">
+                <div class="block-title">
+                    <img src="Iconos/engranaje.png" class="section-icon" alt=""> Preferencias
+                </div>
+                <form id="formPreferencias" style="margin-top:12px;">
+                    <div style="margin-bottom:12px;">
+                        <label class="muted" style="display:block; margin-bottom:4px;">Idioma</label>
+                        <select id="idioma" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                            <option value="es">Español</option>
+                            <option value="en">English</option>
+                            <option value="fr">Français</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom:12px;">
+                        <label class="muted" style="display:block; margin-bottom:4px;">Método de pago preferido</label>
+                        <select id="metodoPago"
+                            style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                            <option value="">Seleccionar...</option>
+                            <option value="tarjeta">Tarjeta de crédito</option>
+                            <option value="paypal">PayPal</option>
+                            <option value="transferencia">Transferencia bancaria</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom:12px;">
+                        <label class="muted" style="display:block; margin-bottom:4px;">Notificaciones</label>
+                        <div style="display:flex; gap:8px; flex-direction:column;">
+                            <label style="display:flex; align-items:center; gap:6px;">
+                                <input type="checkbox" id="notifEmail" /> Email
+                            </label>
+                            <label style="display:flex; align-items:center; gap:6px;">
+                                <input type="checkbox" id="notifSMS" /> SMS
+                            </label>
+                            <label style="display:flex; align-items:center; gap:6px;">
+                                <input type="checkbox" id="notifPromo" /> Promociones
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn"
+                        style="width:100%; padding:10px; background:#88B04B; color:white; border:none; border-radius:4px; cursor:pointer;">
+                        Guardar Preferencias
+                    </button>
+                </form>
+            </section>
+
+            <section class="card-white" style="padding:16px;">
+                <div class="block-title">
+                    <img src="Iconos/comentario.png" class="section-icon" alt=""> Mis Comentarios
+                </div>
+                <form id="formComentario" style="margin-top:12px; margin-bottom:16px;">
+                    <textarea id="nuevoComentario" placeholder="Escribe un comentario..."
+                        style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px; min-height:80px; resize:vertical;"></textarea>
+                    <button type="submit" class="btn"
+                        style="margin-top:8px; width:100%; padding:10px; background:#E8C84A; color:#2E5A3B; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">
+                        Agregar Comentario
+                    </button>
+                </form>
+                <div id="listaComentarios" style="display:flex; flex-direction:column; gap:10px;">
+                    <div class="empty" id="noComentarios">
+                        <img src="Iconos/comentario.png" class="empty-icon" alt="Sin comentarios">
+                        <div>No hay comentarios aún</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="js/db-config.js"></script>
+    <script src="js/db-postgres.js"></script>
+    <script src="js/db-mongo.js"></script>
+    <script src="js/dropdown.js"></script>
+    <script src="js/mi_cuenta.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catálogo - Cafetería Rodilla</title>
+    <link rel="stylesheet" href="css/catalogo.css">
+</head>
+<body>
+<header class="topbar">
+    <div class="topbar-inner">
+        <div class="brand">Rodilla <span>Café</span></div>
+        <nav class="nav">
+            <a href="catalogo.html" class="link">Catálogo</a>
+            <a href="carrito.html" class="link">Carrito</a>
+            <div class="dropdown">
+                <button class="btn-cuenta">
+                    <img src="Iconos/usuario.png" class="nav-icon" alt="">
+                    Mi Cuenta
+                    <img src="Iconos/flecha-hacia-abajo.png" class="nav-icon nav-arrow" alt="">
+                </button>
+                <div class="dropdown-menu">
+                    <a href="mi_cuenta.html" class="dropdown-item">Ver estado</a>
+                    <a href="login.html" class="dropdown-item salir">Cerrar Sesión</a>
+                </div>
+            </div>
+            <a href="login.html" class="btn btn-primary">Iniciar Sesión</a>
+        </nav>
+    </div>
+</header>
+
+<main class="page">
+    <section class="hero hero-center">
+        <h1 class="hero-title">Nuestros Productos</h1>
+        <p class="hero-sub">Descubre nuestra selección de café y más</p>
+    </section>
+
+    <section class="toolbar">
+        <input id="buscador" class="input" placeholder="Buscar productos...">
+        <select id="filtro" class="input select">
+            <option value="">Todos</option>
+            <option value="Bebidas Calientes">Bebidas Calientes</option>
+            <option value="Bebidas Frías">Bebidas Frías</option>
+            <option value="Comidas">Comidas</option>
+            <option value="Panadería">Panadería</option>
+            <option value="Postres">Postres</option>
+        </select>
+    </section>
+
+    <section id="grid" class="grid"></section>
+</main>
+
+<script src="js/db-config.js"></script>
+<script src="js/db-postgres.js"></script>
+<script src="js/dropdown.js"></script>
+<script src="js/catalogo.js"></script>
+</body>
+</html>
