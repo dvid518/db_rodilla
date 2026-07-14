@@ -25,7 +25,7 @@ const pgPool = new Pool({
 // ============================================================
 // 2. CONEXIÓN A MONGODB ATLAS
 // ============================================================
-const MONGO_URI = 'mongodb+srv://ygmrtbnc:faae8203-c9d9-45e9-b472-b3a9ea37ce38@rodillacluster.fyl02.mongodb.net/';
+const MONGO_URI = 'mongodb+srv://david_:<db_password>@rodillacluster.xtchrmj.mongodb.net/?appName=RodillaCluster';
 const mongoClient = new MongoClient(MONGO_URI);
 let mongoDB;
 
