@@ -12,10 +12,7 @@
     <header class="topbar">
         <div class="topbar-inner">
             <div class="brand">Rodilla <span>Café</span></div>
-            <nav class="nav">
-                <a href="catalogo.html" class="link">Catálogo</a>
-                <a href="login.html" class="btn btn-primary">Iniciar Sesión</a>
-            </nav>
+            <nav class="nav"></nav>
         </div>
     </header>
 
@@ -47,9 +44,18 @@
         </section>
     </main>
 
-    <script src="js/db-config.js"></script>
-    <script src="js/db-postgres.js"></script>
-    <script src="js/registro.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "@neondatabase/serverless": "https://cdn.jsdelivr.net/npm/@neondatabase/serverless@0.10.0/+esm"
+            }
+        }
+        </script>
+    <script type="module" src="js/db-config.js"></script>
+    <script type="module" src="js/db-postgres.js"></script>
+    <script type="module" src="js/db-mongo.js"></script>
+    <script type="module" src="js/header.js"></script>
+    <script type="module" src="js/catalogo.js"></script>
 </body>
 
 </html>

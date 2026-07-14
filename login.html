@@ -1,46 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Iniciar Sesión - Cafetería Rodilla</title>
     <link rel="stylesheet" href="css/login.css">
 </head>
+
 <body>
-<header class="topbar">
-    <div class="topbar-inner">
-        <div class="brand">Rodilla <span>Café</span></div>
-        <nav class="nav">
-            <a href="catalogo.html" class="link">Catálogo</a>
-            <a href="login.html" class="btn btn-primary active">Iniciar Sesión</a>
-        </nav>
-    </div>
-</header>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <div class="brand">Rodilla <span>Café</span></div>
+            <nav class="nav"></nav>
+        </div>
+    </header>
 
-<main class="wrap">
-    <section class="panel">
-        <h1 class="title text-center">Iniciar Sesión</h1>
-        <p class="subtitle text-center">Accede a tu cuenta</p>
+    <main class="wrap">
+        <section class="panel">
+            <h1 class="title text-center">Iniciar Sesión</h1>
+            <p class="subtitle text-center">Accede a tu cuenta</p>
 
-        <form id="loginForm" class="form visible">
-            <label>Email</label>
-            <input type="email" id="email" placeholder="tu@email.com" required>
+            <form id="loginForm" class="form visible">
+                <label>Email</label>
+                <input type="email" id="email" placeholder="tu@email.com" required>
 
-            <label>Contraseña</label>
-            <input type="password" id="password" placeholder="********" required>
+                <label>Contraseña</label>
+                <input type="password" id="password" placeholder="********" required>
 
-            <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
-        </form>
+                <button class="btn btn-primary" type="submit">Iniciar Sesión</button>
+            </form>
 
-        <p class="hint">
-            ¿No tienes cuenta?
-            <a href="registro.html">Regístrate</a>
-        </p>
-    </section>
-</main>
+            <p class="hint">
+                ¿No tienes cuenta?
+                <a href="registro.html">Regístrate</a>
+            </p>
+        </section>
+    </main>
 
-<script src="js/db-config.js"></script>
-<script src="js/db-postgres.js"></script>
-<script src="js/login.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "@neondatabase/serverless": "https://cdn.jsdelivr.net/npm/@neondatabase/serverless@0.10.0/+esm"
+            }
+        }
+        </script>
+    <script type="module" src="js/db-config.js"></script>
+    <script type="module" src="js/db-postgres.js"></script>
+    <script type="module" src="js/db-mongo.js"></script>
+    <script type="module" src="js/header.js"></script>
+    <script type="module" src="js/catalogo.js"></script>
 </body>
+
 </html>

@@ -13,39 +13,26 @@
     <nav class="navbar">
         <div class="navbar-inner">
             <a href="admin.html" class="brand-link">
-                <img src="Iconos/logo.png" alt="Logo" class="logo-img">
-                <h1 class="brand-text">Rodilla - Admin</h1>
+                <h1 class="brand-text">☕ Rodilla - Admin</h1>
             </a>
             <div class="nav-links">
-                <a href="admin.html" class="nav-item">
-                    <img src="Iconos/grafico.png" class="icono-nav"> Panel
-                </a>
-                <a href="reportes.html" class="nav-item active">
-                    <img src="Iconos/reporte.png" class="icono-nav"> Reportes
-                </a>
-                <a href="login.html" class="nav-item">
-                    <img src="Iconos/salir.png" class="icono-nav"> Salir
-                </a>
+                <a href="admin.html" class="nav-item">📊 Panel</a>
+                <a href="reportes.html" class="nav-item active">📈 Reportes</a>
+                <a href="#" class="nav-item" onclick="cerrarSesion()">🚪 Salir</a>
             </div>
         </div>
     </nav>
 
     <div class="reportes-container">
         <div class="header">
-            <h2>
-                <img src="Iconos/reporte.png" class="icono-small" alt="Icono Reporte"
-                    style="width:32px; height:32px; margin-right:10px; vertical-align:bottom;">
-                Reportes Integrados
-            </h2>
+            <h2>📈 Reportes Integrados</h2>
             <p>Datos combinados de PostgreSQL y MongoDB</p>
         </div>
 
         <div class="report-card">
             <div class="report-header">
-                <h3>Resumen General</h3>
-                <button class="btn-load" onclick="cargarResumenGeneral()">
-                    <img src="Iconos/reporte.png" class="icono-small"> Actualizar
-                </button>
+                <h3>📊 Resumen General</h3>
+                <button class="btn-load" onclick="cargarResumenGeneral()">🔄 Actualizar</button>
             </div>
             <div class="stats-grid" id="statsGeneral">
                 <div class="stat-box">
@@ -56,10 +43,8 @@
 
         <div class="report-card">
             <div class="report-header">
-                <h3>Clientes - Vista Integrada</h3>
-                <button class="btn-load" onclick="cargarClientesIntegrados()">
-                    <img src="Iconos/grupo.png" class="icono-small"> Cargar Datos
-                </button>
+                <h3>👥 Clientes - Vista Integrada</h3>
+                <button class="btn-load" onclick="cargarClientesIntegrados()">📋 Cargar Datos</button>
             </div>
             <div id="clientesLista">
                 <p style="text-align: center; padding: 2rem; color:#888;">Haz clic en Cargar Datos</p>
@@ -70,38 +55,32 @@
     <div id="modalCliente" class="modal-overlay" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>
-                    <img src="Iconos/grupo.png" class="icono-small">
-                    Información del Cliente
-                </h3>
+                <h3>👤 Información del Cliente</h3>
                 <span class="close-btn" onclick="cerrarModalCliente()">&times;</span>
             </div>
 
             <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
-
-                <div class="detalle-fila"><span class="icono" style="color:#667eea; background:#eef2ff;"><img
-                            src="Iconos/lista.png"></span>
+                <div class="detalle-fila"><span class="icono">🆔</span>
                     <div><small>ID Cliente</small>
                         <div id="mcId" class="dato-fuerte">-</div>
                     </div>
                 </div>
-                <div class="detalle-fila"><span class="icono"><img src="Iconos/usuario.png"></span>
+                <div class="detalle-fila"><span class="icono">👤</span>
                     <div><small>Nombre</small>
                         <div id="mcNombre" class="dato-fuerte">-</div>
                     </div>
                 </div>
-                <div class="detalle-fila"><span class="icono"><img src="Iconos/comentario.png"></span>
+                <div class="detalle-fila"><span class="icono">📧</span>
                     <div><small>Email</small>
                         <div id="mcEmail">-</div>
                     </div>
                 </div>
-                <div class="detalle-fila"><span class="icono"><img src="Iconos/telefono.png"></span>
+                <div class="detalle-fila"><span class="icono">📱</span>
                     <div><small>Teléfono</small>
                         <div id="mcTelefono">-</div>
                     </div>
                 </div>
-                <div class="detalle-fila" style="border-bottom:none;"><span class="icono"><img
-                            src="Iconos/direccion.png"></span>
+                <div class="detalle-fila" style="border-bottom:none;"><span class="icono">📍</span>
                     <div><small>Dirección</small>
                         <div id="mcDireccion">-</div>
                     </div>
@@ -110,7 +89,7 @@
                 <hr style="margin: 1rem 0; border:0; border-top:1px solid #eee;">
 
                 <h4 style="margin-bottom:0.5rem; color:#2E5A3B; display:flex; align-items:center; gap:5px;">
-                    <img src="Iconos/engranaje.png" class="icono-small"> Preferencias
+                    ⚙️ Preferencias
                 </h4>
                 <div id="boxPreferencias"
                     style="background:#f9fafb; padding:10px; border-radius:6px; font-size:0.9rem; border:1px solid #eee; margin-bottom:1rem;">
@@ -118,12 +97,11 @@
                 </div>
 
                 <h4 style="margin-bottom:0.5rem; color:#2E5A3B; display:flex; align-items:center; gap:5px;">
-                    <img src="Iconos/comentario.png" class="icono-small"> Mensajes Recibidos
+                    💬 Mensajes Recibidos
                 </h4>
                 <div id="listaComentariosMongo">
                     <p style="color:#999;">Cargando...</p>
                 </div>
-
             </div>
             <div class="modal-footer">
                 <button class="btn-cerrar" onclick="cerrarModalCliente()">Cerrar</button>
@@ -131,10 +109,18 @@
         </div>
     </div>
 
-    <script src="js/db-config.js"></script>
-    <script src="js/db-postgres.js"></script>
-    <script src="js/db-mongo.js"></script>
-    <script src="js/reportes.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "@neondatabase/serverless": "https://cdn.jsdelivr.net/npm/@neondatabase/serverless@0.10.0/+esm"
+            }
+        }
+        </script>
+    <script type="module" src="js/db-config.js"></script>
+    <script type="module" src="js/db-postgres.js"></script>
+    <script type="module" src="js/db-mongo.js"></script>
+    <script type="module" src="js/header.js"></script>
+    <script type="module" src="js/catalogo.js"></script>
 </body>
 
 </html>

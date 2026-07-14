@@ -1,94 +1,104 @@
+import { API_URL } from './config.js';
+
 async function cargarResumenGeneral() {
     const stats = document.getElementById('statsGeneral');
-    const ingresos = await queryPG("SELECT COALESCE(SUM(total), 0) as total FROM pedidos");
-    const pedidos = await queryPG("SELECT COUNT(*) as count FROM pedidos");
-    const clientes = await queryPG("SELECT COUNT(*) as count FROM clientes");
-    const productos = await queryPG("SELECT COUNT(*) as count FROM productos");
-    const mongoTotal = await findMongo({});
-    const totalComentarios = mongoTotal.documents ? mongoTotal.documents.reduce((acc, d) => acc + (d.comentarios ? d.comentarios.length : 0), 0) : 0;
-    stats.innerHTML = `
-        <div class="stat-box"><h4>Ingresos</h4><p>S/ ${parseFloat(ingresos[0]?.total || 0).toFixed(2)}</p></div>
-        <div class="stat-box"><h4>Pedidos</h4><p>${pedidos[0]?.count || 0}</p></div>
-        <div class="stat-box"><h4>Clientes</h4><p>${clientes[0]?.count || 0}</p></div>
-        <div class="stat-box"><h4>Productos</h4><p>${productos[0]?.count || 0}</p></div>
-        <div class="stat-box"><h4>Comentarios</h4><p>${totalComentarios}</p></div>
-    `;
+    try {
+        const res = await fetch(`${API_URL}/api/resumen`);
+        const data = await res.json();
+        stats.innerHTML = `
+            <div class="stat-box"><h4>💰 Ingresos</h4><p>S/ ${parseFloat(data.ingresos || 0).toFixed(2)}</p></div>
+            <div class="stat-box"><h4>🧾 Pedidos</h4><p>${data.pedidos || 0}</p></div>
+            <div class="stat-box"><h4>👥 Clientes</h4><p>${data.clientes || 0}</p></div>
+            <div class="stat-box"><h4>📦 Productos</h4><p>${data.productos || 0}</p></div>
+            <div class="stat-box"><h4>💬 Comentarios</h4><p>${data.comentarios || 0}</p></div>
+        `;
+    } catch (error) {
+        console.error('Error cargando resumen:', error);
+        stats.innerHTML = '<div class="stat-box"><p style="color:#F4A7BB;">Error al cargar datos</p></div>';
+    }
 }
 
 async function cargarClientesIntegrados() {
     const div = document.getElementById('clientesLista');
-    const clientes = await queryPG("SELECT id_cliente, nombre, email, telefono FROM clientes ORDER BY id_cliente LIMIT 20");
-    if (!clientes || !clientes.length) {
-        div.innerHTML = '<p style="text-align:center;color:#888;">Sin clientes</p>';
-        return;
-    }
-    div.innerHTML = `
-        <table style="width:100%;border-collapse:collapse;">
-            <tr style="background:#f5f5f5;">
-                <th style="padding:10px;text-align:left;">ID</th>
-                <th style="padding:10px;text-align:left;">Nombre</th>
-                <th style="padding:10px;text-align:left;">Email</th>
-                <th style="padding:10px;text-align:left;">Comentarios</th>
-                <th style="padding:10px;text-align:left;">Acción</th>
-            </tr>
-            ${clientes.map(c => `
-                <tr style="border-bottom:1px solid #eee;">
-                    <td style="padding:10px;">${c.id_cliente}</td>
-                    <td style="padding:10px;">${c.nombre}</td>
-                    <td style="padding:10px;">${c.email}</td>
-                    <td style="padding:10px;" id="comentarios_${c.id_cliente}">Cargando...</td>
-                    <td style="padding:10px;"><button onclick="verCliente(${c.id_cliente})">Ver</button></td>
+    div.innerHTML = '<p style="text-align:center;color:#888;">Cargando...</p>';
+    try {
+        const res = await fetch(`${API_URL}/api/clientes-integrado`);
+        const data = await res.json();
+        if (!data || data.length === 0) {
+            div.innerHTML = '<p style="text-align:center;color:#888;">Sin clientes</p>';
+            return;
+        }
+        div.innerHTML = `
+            <table style="width:100%;border-collapse:collapse;">
+                <tr style="background:#f5f5f5;">
+                    <th style="padding:10px;text-align:left;">ID</th>
+                    <th style="padding:10px;text-align:left;">Nombre</th>
+                    <th style="padding:10px;text-align:left;">Email</th>
+                    <th style="padding:10px;text-align:left;">💬 Comentarios</th>
+                    <th style="padding:10px;text-align:left;">Acción</th>
                 </tr>
-            `).join('')}
-        </table>
-    `;
-    for (const c of clientes) {
-        const mongo = await findMongo({ id_cliente: c.id_cliente });
-        const count = mongo.documents && mongo.documents.length ? (mongo.documents[0].comentarios ? mongo.documents[0].comentarios.length : 0) : 0;
-        document.getElementById(`comentarios_${c.id_cliente}`).textContent = count;
+                ${data.map(c => `
+                    <tr style="border-bottom:1px solid #eee;">
+                        <td style="padding:10px;">${c.id_cliente}</td>
+                        <td style="padding:10px;">${c.nombre}</td>
+                        <td style="padding:10px;">${c.email}</td>
+                        <td style="padding:10px;">${c.comentarios_count || 0}</td>
+                        <td style="padding:10px;"><button onclick="verCliente(${c.id_cliente})">Ver</button></td>
+                    </tr>
+                `).join('')}
+            </table>
+        `;
+    } catch (error) {
+        console.error('Error cargando clientes integrados:', error);
+        div.innerHTML = '<p style="text-align:center;color:#F4A7BB;">Error al cargar clientes</p>';
     }
 }
 
-async function verCliente(id) {
-    const mongo = await findMongo({ id_cliente: id });
-    const pg = await queryPG(`SELECT id_cliente, nombre, email, telefono FROM clientes WHERE id_cliente = ${id}`);
-    if (pg && pg.length) {
-        document.getElementById('mcId').textContent = pg[0].id_cliente;
-        document.getElementById('mcNombre').textContent = pg[0].nombre;
-        document.getElementById('mcEmail').textContent = pg[0].email;
-        document.getElementById('mcTelefono').textContent = pg[0].telefono || '-';
+window.verCliente = async function(id) {
+    try {
+        const res = await fetch(`${API_URL}/api/cliente/${id}`);
+        const data = await res.json();
+        if (data.error) {
+            alert('Error al cargar el cliente');
+            return;
+        }
+        document.getElementById('mcId').textContent = data.id_cliente || '-';
+        document.getElementById('mcNombre').textContent = data.nombre || '-';
+        document.getElementById('mcEmail').textContent = data.email || '-';
+        document.getElementById('mcTelefono').textContent = data.telefono || '-';
         document.getElementById('mcDireccion').textContent = '-';
-    }
-    const prefs = document.getElementById('boxPreferencias');
-    const comentariosDiv = document.getElementById('listaComentariosMongo');
-    if (mongo.documents && mongo.documents.length) {
-        const doc = mongo.documents[0];
-        if (doc.preferencias) {
+
+        const prefs = document.getElementById('boxPreferencias');
+        if (data.preferencias) {
             prefs.innerHTML = `
-                <p><strong>Idioma:</strong> ${doc.preferencias.idioma || 'No especificado'}</p>
-                <p><strong>Método de pago:</strong> ${doc.preferencias.metodo_pago || 'No especificado'}</p>
-                <p><strong>Notificaciones:</strong> ${doc.preferencias.notificaciones ? 'Email: ' + (doc.preferencias.notificaciones.email ? '✓' : '✗') : 'No configurado'}</p>
+                <p><strong>Idioma:</strong> ${data.preferencias.idioma || 'No especificado'}</p>
+                <p><strong>Método de pago:</strong> ${data.preferencias.metodo_pago || 'No especificado'}</p>
             `;
         } else {
             prefs.innerHTML = '<p style="color:#999;">Sin preferencias</p>';
         }
-        if (doc.comentarios && doc.comentarios.length) {
-            comentariosDiv.innerHTML = doc.comentarios.map(c => `
+
+        const comentariosDiv = document.getElementById('listaComentariosMongo');
+        if (data.comentarios && data.comentarios.length > 0) {
+            comentariosDiv.innerHTML = data.comentarios.map(c => `
                 <div style="padding:8px;border-bottom:1px solid #eee;">
                     <p>${c.texto}</p>
-                    <small>${new Date(c.fecha).toLocaleDateString()}</small>
+                    <small>${c.fecha ? new Date(c.fecha).toLocaleDateString() : ''}</small>
                 </div>
             `).join('');
         } else {
             comentariosDiv.innerHTML = '<p style="color:#999;">Sin comentarios</p>';
         }
-    } else {
-        prefs.innerHTML = '<p style="color:#999;">Sin datos en MongoDB</p>';
-        comentariosDiv.innerHTML = '<p style="color:#999;">Sin comentarios</p>';
+        document.getElementById('modalCliente').style.display = 'flex';
+    } catch (error) {
+        console.error('Error cargando cliente:', error);
+        alert('Error de conexión');
     }
-    document.getElementById('modalCliente').style.display = 'flex';
-}
+};
 
-function cerrarModalCliente() {
+window.cerrarModalCliente = function() {
     document.getElementById('modalCliente').style.display = 'none';
-}
+};
+
+// Cargar resumen automáticamente al cargar la página
+document.addEventListener('DOMContentLoaded', cargarResumenGeneral);

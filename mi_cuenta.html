@@ -12,21 +12,7 @@
     <header class="topbar">
         <div class="topbar-inner">
             <div class="brand">Rodilla <span>Café</span></div>
-            <nav class="nav">
-                <a href="catalogo.html" class="link">Catálogo</a>
-                <a href="carrito.html" class="link">Carrito</a>
-                <div class="dropdown">
-                    <button class="btn-cuenta">
-                        <img src="Iconos/usuario.png" class="nav-icon" alt="">
-                        Mi Cuenta
-                        <img src="Iconos/flecha-hacia-abajo.png" class="nav-icon nav-arrow" alt="">
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="mi_cuenta.html" class="dropdown-item">Ver estado</a>
-                        <a href="login.html" class="dropdown-item salir">Cerrar Sesión</a>
-                    </div>
-                </div>
-            </nav>
+            <nav class="nav"></nav>
         </div>
     </header>
 
@@ -132,11 +118,18 @@
         </div>
     </main>
 
-    <script src="js/db-config.js"></script>
-    <script src="js/db-postgres.js"></script>
-    <script src="js/db-mongo.js"></script>
-    <script src="js/dropdown.js"></script>
-    <script src="js/mi_cuenta.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "@neondatabase/serverless": "https://cdn.jsdelivr.net/npm/@neondatabase/serverless@0.10.0/+esm"
+            }
+        }
+        </script>
+    <script type="module" src="js/db-config.js"></script>
+    <script type="module" src="js/db-postgres.js"></script>
+    <script type="module" src="js/db-mongo.js"></script>
+    <script type="module" src="js/header.js"></script>
+    <script type="module" src="js/catalogo.js"></script>
 </body>
 
 </html>

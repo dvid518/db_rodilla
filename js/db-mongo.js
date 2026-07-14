@@ -1,4 +1,13 @@
-async function findMongo(filter) {
+import { MONGO_CONFIG, MONGO_API_URL } from './db-config.js';
+
+function mongoHeaders() {
+    return {
+        'api-key': MONGO_CONFIG.apiKey,
+        'Content-Type': 'application/json'
+    };
+}
+
+export async function findMongo(filter) {
     const res = await fetch(`${MONGO_API_URL}/find`, {
         method: 'POST',
         headers: mongoHeaders(),
@@ -12,7 +21,7 @@ async function findMongo(filter) {
     return await res.json();
 }
 
-async function insertMongo(doc) {
+export async function insertMongo(doc) {
     const res = await fetch(`${MONGO_API_URL}/insertOne`, {
         method: 'POST',
         headers: mongoHeaders(),
@@ -26,7 +35,7 @@ async function insertMongo(doc) {
     return await res.json();
 }
 
-async function updateMongo(filter, update) {
+export async function updateMongo(filter, update) {
     const res = await fetch(`${MONGO_API_URL}/updateOne`, {
         method: 'POST',
         headers: mongoHeaders(),

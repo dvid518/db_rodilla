@@ -1,68 +1,68 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Rodilla Café</title>
     <link rel="stylesheet" href="css/catalogo.css">
 </head>
+
 <body>
-<header class="topbar">
-    <div class="topbar-inner">
-        <div class="brand">Rodilla <span>Café</span></div>
-        <nav class="nav">
-            <a href="index.html" class="link">Inicio</a>
-            <a href="catalogo.html" class="link">Catálogo</a>
-            <a href="carrito.html" class="link">Carrito</a>
-            <div class="dropdown">
-                <button class="btn-cuenta">
-                    <img src="Iconos/usuario.png" class="nav-icon" alt="">
-                    Mi Cuenta
-                    <img src="Iconos/flecha-hacia-abajo.png" class="nav-icon nav-arrow" alt="">
-                </button>
-                <div class="dropdown-menu">
-                    <a href="mi_cuenta.html" class="dropdown-item">Ver estado</a>
-                    <a href="login.html" class="dropdown-item salir">Cerrar Sesión</a>
-                </div>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <div class="brand">Rodilla <span>Café</span></div>
+            <nav class="nav"></nav>
+        </div>
+    </header>
+
+    <main class="page">
+        <section class="hero hero-center">
+            <h1 class="hero-title">Bienvenido a Rodilla Café</h1>
+            <p class="hero-sub">El mejor café de la ciudad, hecho con pasión</p>
+        </section>
+
+        <section class="grid" style="margin-top: 20px;">
+            <div class="producto-card" style="text-align:center;padding:30px;">
+                <h3>☕ Café de Especialidad</h3>
+                <p style="color:#8B6B4A;">Granos seleccionados de origen</p>
             </div>
-            <a href="login.html" class="btn btn-primary">Iniciar Sesión</a>
-        </nav>
-    </div>
-</header>
+            <div class="producto-card" style="text-align:center;padding:30px;">
+                <h3>🥐 Panadería Artesanal</h3>
+                <p style="color:#8B6B4A;">Frescos, horneados cada día</p>
+            </div>
+            <div class="producto-card" style="text-align:center;padding:30px;">
+                <h3>🍰 Postres Caseros</h3>
+                <p style="color:#8B6B4A;">El sabor de siempre</p>
+            </div>
+            <div class="producto-card" style="text-align:center;padding:30px;">
+                <h3>🌿 Ambiente Acogedor</h3>
+                <p style="color:#8B6B4A;">Disfruta en un espacio único</p>
+            </div>
+        </section>
 
-<main class="page">
-    <section class="hero hero-center">
-        <h1 class="hero-title">Bienvenido a Rodilla Café</h1>
-        <p class="hero-sub">El mejor café de la ciudad, hecho con pasión</p>
-    </section>
-
-    <section class="grid" style="margin-top: 20px;">
-        <div class="producto-card" style="text-align:center;padding:30px;">
-            <h3>☕ Café de Especialidad</h3>
-            <p style="color:#8B6B4A;">Granos seleccionados de origen</p>
-        </div>
-        <div class="producto-card" style="text-align:center;padding:30px;">
-            <h3>🥐 Panadería Artesanal</h3>
-            <p style="color:#8B6B4A;">Frescos, horneados cada día</p>
-        </div>
-        <div class="producto-card" style="text-align:center;padding:30px;">
-            <h3>🍰 Postres Caseros</h3>
-            <p style="color:#8B6B4A;">El sabor de siempre</p>
-        </div>
-        <div class="producto-card" style="text-align:center;padding:30px;">
-            <h3>🌿 Ambiente Acogedor</h3>
-            <p style="color:#8B6B4A;">Disfruta en un espacio único</p>
-        </div>
-    </section>
-
-    <section style="text-align:center;margin:40px 0;padding:30px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-        <h2 style="color:#2E5A3B;">Visítanos</h2>
-        <p style="color:#8B6B4A;margin:10px 0;">📍 Av. Principal 123, Lima</p>
-        <p style="color:#8B6B4A;">🕐 Lunes a Sábado 8:00 - 20:00</p>
-        <a href="catalogo.html" class="btn btn-primary" style="margin-top:16px;display:inline-block;">Ver Catálogo</a>
-    </section>
-</main>
-
-<script src="js/dropdown.js"></script>
+        <section
+            style="text-align:center;margin:40px 0;padding:30px;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+            <h2 style="color:#2E5A3B;">Visítanos</h2>
+            <p style="color:#8B6B4A;margin:10px 0;">📍 Av. Principal 123, Lima</p>
+            <p style="color:#8B6B4A;">🕐 Lunes a Sábado 8:00 - 20:00</p>
+            <a href="catalogo.html" class="btn btn-primary" style="margin-top:16px;display:inline-block;">Ver
+                Catálogo</a>
+        </section>
+    </main>
+    
+    <script type="importmap">
+        {
+            "imports": {
+                "@neondatabase/serverless": "https://cdn.jsdelivr.net/npm/@neondatabase/serverless@0.10.0/+esm"
+            }
+        }
+        </script>
+    <script type="module" src="js/db-config.js"></script>
+    <script type="module" src="js/db-postgres.js"></script>
+    <script type="module" src="js/db-mongo.js"></script>
+    <script type="module" src="js/header.js"></script>
+    <script type="module" src="js/catalogo.js"></script>
 </body>
+
 </html>
