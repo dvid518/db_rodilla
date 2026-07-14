@@ -1,7 +1,16 @@
 import { API_URL } from './config.js';
 
-async function cargarResumenGeneral() {
+// ============================================================
+// FUNCIONES GLOBALES (para onclick en HTML)
+// ============================================================
+
+window.cargarResumenGeneral = async function () {
     const stats = document.getElementById('statsGeneral');
+    if (!stats) {
+        console.error('Elemento statsGeneral no encontrado');
+        return;
+    }
+    stats.innerHTML = '<div class="stat-box"><p>Cargando...</p></div>';
     try {
         const res = await fetch(`${API_URL}/api/resumen`);
         const data = await res.json();
@@ -16,10 +25,14 @@ async function cargarResumenGeneral() {
         console.error('Error cargando resumen:', error);
         stats.innerHTML = '<div class="stat-box"><p style="color:#F4A7BB;">Error al cargar datos</p></div>';
     }
-}
+};
 
-async function cargarClientesIntegrados() {
+window.cargarClientesIntegrados = async function () {
     const div = document.getElementById('clientesLista');
+    if (!div) {
+        console.error('Elemento clientesLista no encontrado');
+        return;
+    }
     div.innerHTML = '<p style="text-align:center;color:#888;">Cargando...</p>';
     try {
         const res = await fetch(`${API_URL}/api/clientes-integrado`);
@@ -30,14 +43,14 @@ async function cargarClientesIntegrados() {
         }
         div.innerHTML = `
             <table style="width:100%;border-collapse:collapse;">
-                <tr style="background:#f5f5f5;">
+                <thead><tr style="background:#f5f5f5;">
                     <th style="padding:10px;text-align:left;">ID</th>
                     <th style="padding:10px;text-align:left;">Nombre</th>
                     <th style="padding:10px;text-align:left;">Email</th>
                     <th style="padding:10px;text-align:left;">💬 Comentarios</th>
                     <th style="padding:10px;text-align:left;">Acción</th>
-                </tr>
-                ${data.map(c => `
+                </tr></thead>
+                <tbody>${data.map(c => `
                     <tr style="border-bottom:1px solid #eee;">
                         <td style="padding:10px;">${c.id_cliente}</td>
                         <td style="padding:10px;">${c.nombre}</td>
@@ -45,16 +58,16 @@ async function cargarClientesIntegrados() {
                         <td style="padding:10px;">${c.comentarios_count || 0}</td>
                         <td style="padding:10px;"><button onclick="verCliente(${c.id_cliente})">Ver</button></td>
                     </tr>
-                `).join('')}
+                `).join('')}</tbody>
             </table>
         `;
     } catch (error) {
         console.error('Error cargando clientes integrados:', error);
         div.innerHTML = '<p style="text-align:center;color:#F4A7BB;">Error al cargar clientes</p>';
     }
-}
+};
 
-window.verCliente = async function(id) {
+window.verCliente = async function (id) {
     try {
         const res = await fetch(`${API_URL}/api/cliente/${id}`);
         const data = await res.json();
@@ -96,9 +109,14 @@ window.verCliente = async function(id) {
     }
 };
 
-window.cerrarModalCliente = function() {
+window.cerrarModalCliente = function () {
     document.getElementById('modalCliente').style.display = 'none';
 };
 
-// Cargar resumen automáticamente al cargar la página
-document.addEventListener('DOMContentLoaded', cargarResumenGeneral);
+// ============================================================
+// CARGAR AUTOMÁTICAMENTE
+// ============================================================
+
+document.addEventListener('DOMContentLoaded', () => {
+    window.cargarResumenGeneral();
+});

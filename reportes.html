@@ -29,6 +29,9 @@
             <p>Datos combinados de PostgreSQL y MongoDB</p>
         </div>
 
+        <!-- ============================================================ -->
+        <!-- REPORTE 1: RESUMEN GENERAL -->
+        <!-- ============================================================ -->
         <div class="report-card">
             <div class="report-header">
                 <h3>📊 Resumen General</h3>
@@ -41,6 +44,9 @@
             </div>
         </div>
 
+        <!-- ============================================================ -->
+        <!-- REPORTE 2: CLIENTES INTEGRADOS -->
+        <!-- ============================================================ -->
         <div class="report-card">
             <div class="report-header">
                 <h3>👥 Clientes - Vista Integrada</h3>
@@ -52,14 +58,17 @@
         </div>
     </div>
 
+    <!-- ============================================================ -->
+    <!-- MODAL: INFORMACIÓN DEL CLIENTE -->
+    <!-- ============================================================ -->
     <div id="modalCliente" class="modal-overlay" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>👤 Información del Cliente</h3>
                 <span class="close-btn" onclick="cerrarModalCliente()">&times;</span>
             </div>
-
             <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                <!-- Datos básicos -->
                 <div class="detalle-fila"><span class="icono">🆔</span>
                     <div><small>ID Cliente</small>
                         <div id="mcId" class="dato-fuerte">-</div>
@@ -88,17 +97,17 @@
 
                 <hr style="margin: 1rem 0; border:0; border-top:1px solid #eee;">
 
-                <h4 style="margin-bottom:0.5rem; color:#2E5A3B; display:flex; align-items:center; gap:5px;">
-                    ⚙️ Preferencias
-                </h4>
+                <!-- Preferencias -->
+                <h4 style="margin-bottom:0.5rem; color:#2E5A3B; display:flex; align-items:center; gap:5px;">⚙️
+                    Preferencias</h4>
                 <div id="boxPreferencias"
                     style="background:#f9fafb; padding:10px; border-radius:6px; font-size:0.9rem; border:1px solid #eee; margin-bottom:1rem;">
                     <p style="color:#999;">Cargando...</p>
                 </div>
 
-                <h4 style="margin-bottom:0.5rem; color:#2E5A3B; display:flex; align-items:center; gap:5px;">
-                    💬 Mensajes Recibidos
-                </h4>
+                <!-- Comentarios -->
+                <h4 style="margin-bottom:0.5rem; color:#2E5A3B; display:flex; align-items:center; gap:5px;">💬 Mensajes
+                    Recibidos</h4>
                 <div id="listaComentariosMongo">
                     <p style="color:#999;">Cargando...</p>
                 </div>
@@ -108,19 +117,11 @@
             </div>
         </div>
     </div>
-
-    <script type="importmap">
-        {
-            "imports": {
-                "@neondatabase/serverless": "https://cdn.jsdelivr.net/npm/@neondatabase/serverless@0.10.0/+esm"
-            }
-        }
-        </script>
-    <script type="module" src="js/db-config.js"></script>
-    <script type="module" src="js/db-postgres.js"></script>
-    <script type="module" src="js/db-mongo.js"></script>
+    
+    <script type="module" src="js/config.js"></script>
     <script type="module" src="js/header.js"></script>
-    <script type="module" src="js/catalogo.js"></script>
+    <script type="module" src="js/reportes.js"></script>
+
 </body>
 
 </html>
