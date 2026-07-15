@@ -18,7 +18,7 @@ const pgPool = new Pool({
     ssl: { rejectUnauthorized: false }
 });
 
-const MONGO_URI = 'mongodb://david_:F84IyNpiujGUPA2e@rodillacluster.xtchrmj.mongodb.net:27017/?tls=true&tlsAllowInvalidCertificates=true&retryWrites=true&w=majority';
+const MONGO_URI = 'mongodb+srv://david_:F84IyNpiujGUPA2e@rodillacluster.xtchrmj.mongodb.net/?appName=RodillaCluster';
 const mongoClient = new MongoClient(MONGO_URI);
 let mongoDB;
 
