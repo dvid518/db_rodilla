@@ -61,8 +61,20 @@
                 <p style="text-align: center; color: #666;">Cargando...</p>
             </div>
         </div>
-
         <div id="productosContent" class="tab-content">
+            <div style="background:#f9f9f9;padding:16px;border-radius:8px;margin-bottom:16px;">
+                <h4>Agregar Producto</h4>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                    <input id="nombreProducto" placeholder="Nombre"
+                        style="padding:8px;border:1px solid #ddd;border-radius:4px;flex:1;">
+                    <input id="precioProducto" type="number" placeholder="Precio"
+                        style="padding:8px;border:1px solid #ddd;border-radius:4px;width:120px;">
+                    <input id="categoriaProducto" placeholder="Categoría"
+                        style="padding:8px;border:1px solid #ddd;border-radius:4px;flex:1;">
+                    <button onclick="agregarProducto()"
+                        style="padding:8px 20px;background:#88B04B;color:white;border:none;border-radius:4px;cursor:pointer;">Agregar</button>
+                </div>
+            </div>
             <div id="productosLista">Cargando...</div>
         </div>
         <div id="pedidosContent" class="tab-content">
@@ -159,7 +171,7 @@
             }
         }
         </script>
-        <script type="module" src="js/config.js"></script>
+    <script type="module" src="js/config.js"></script>
     <script type="module" src="js/header.js"></script>
     <script type="module" src="js/catalogo.js"></script>
     <script type="module" src="js/panel.js"></script>

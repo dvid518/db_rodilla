@@ -1,9 +1,5 @@
 import { API_URL } from './config.js';
 
-// ============================================================
-// FUNCIONES PARA CARGAR DATOS
-// ============================================================
-
 async function cargarResumen() {
     try {
         const res = await fetch(`${API_URL}/api/resumen`);
@@ -142,10 +138,6 @@ async function cargarClientesAdmin() {
     }
 }
 
-// ============================================================
-// CONFIGURAR TABS
-// ============================================================
-
 document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', function() {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -172,9 +164,37 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     });
 });
 
-// ============================================================
-// INICIALIZAR
-// ============================================================
+window.agregarProducto = async function() {
+    const nombre = document.getElementById('nombreProducto').value;
+    const precio = document.getElementById('precioProducto').value;
+    const categoria = document.getElementById('categoriaProducto').value;
+
+    if (!nombre || !precio) {
+        alert('Nombre y precio son obligatorios');
+        return;
+    }
+
+    try {
+        const res = await fetch(`${API_URL}/api/productos`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nombre, precio, categoria })
+        });
+        const data = await res.json();
+        if (data.error) {
+            alert(data.error);
+        } else {
+            alert('Producto agregado correctamente');
+            document.getElementById('nombreProducto').value = '';
+            document.getElementById('precioProducto').value = '';
+            document.getElementById('categoriaProducto').value = '';
+            cargarProductosAdmin();
+        }
+    } catch (error) {
+        console.error('Error agregando producto:', error);
+        alert('Error de conexión');
+    }
+};
 
 document.addEventListener('DOMContentLoaded', () => {
     cargarResumen();

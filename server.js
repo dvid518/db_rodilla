@@ -6,13 +6,9 @@ const { MongoClient } = require('mongodb');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// MIDDLEWARE
 app.use(cors());
 app.use(express.json());
 
-// ============================================================
-// 1. CONEXIÓN A NEON (POSTGRESQL)
-// ============================================================
 const pgPool = new Pool({
     host: 'ep-jolly-bonus-acspto8k-pooler.sa-east-1.aws.neon.tech',
     database: 'neondb',
@@ -22,9 +18,6 @@ const pgPool = new Pool({
     ssl: { rejectUnauthorized: false }
 });
 
-// ============================================================
-// 2. CONEXIÓN A MONGODB ATLAS
-// ============================================================
 const MONGO_URI = 'mongodb://david_:F84IyNpiujGUPA2e@rodillacluster.xtchrmj.mongodb.net:27017/?tls=true&tlsAllowInvalidCertificates=true&retryWrites=true&w=majority';
 const mongoClient = new MongoClient(MONGO_URI);
 let mongoDB;
@@ -40,11 +33,6 @@ async function conectarMongo() {
 }
 conectarMongo();
 
-// ============================================================
-// 3. ENDPOINTS
-// ============================================================
-
-// 3.1. Obtener productos
 app.get('/api/productos', async (req, res) => {
     try {
         const result = await pgPool.query('SELECT * FROM productos WHERE activo = true ORDER BY nombre');
@@ -55,7 +43,6 @@ app.get('/api/productos', async (req, res) => {
     }
 });
 
-// 3.2. Obtener resumen (stats)
 app.get('/api/resumen', async (req, res) => {
     try {
         const ingresos = await pgPool.query('SELECT COALESCE(SUM(total), 0) as total FROM pedidos');
@@ -77,13 +64,12 @@ app.get('/api/resumen', async (req, res) => {
     }
 });
 
-// 3.3. Obtener pedidos recientes
 app.get('/api/pedidos-recientes', async (req, res) => {
     try {
         const result = await pgPool.query(`
             SELECT p.id_pedido, c.nombre, p.total, p.fecha_pedido
             FROM pedidos p JOIN clientes c ON p.id_cliente = c.id_cliente
-            ORDER BY p.fecha_pedido DESC LIMIT 5
+            ORDER BY p.fecha_pedido LIMIT 5
         `);
         res.json(result.rows);
     } catch (error) {
@@ -92,10 +78,9 @@ app.get('/api/pedidos-recientes', async (req, res) => {
     }
 });
 
-// 3.4. Obtener clientes con comentarios (vista integrada)
 app.get('/api/clientes-integrado', async (req, res) => {
     try {
-        const clientes = await pgPool.query('SELECT id_cliente, nombre, email, telefono FROM clientes ORDER BY id_cliente LIMIT 20');
+        const clientes = await pgPool.query('SELECT id_cliente, nombre, email, telefono FROM clientes ORDER BY id_cliente');
         const resultado = [];
         for (const cliente of clientes.rows) {
             const mongoDoc = await mongoDB.collection('clientes_info').findOne({ id_cliente: cliente.id_cliente });
@@ -112,7 +97,6 @@ app.get('/api/clientes-integrado', async (req, res) => {
     }
 });
 
-// 3.5. Obtener cliente específico con detalles
 app.get('/api/cliente/:id', async (req, res) => {
     try {
         const id = parseInt(req.params.id);
@@ -130,13 +114,12 @@ app.get('/api/cliente/:id', async (req, res) => {
     }
 });
 
-// 3.6. Obtener todos los pedidos (admin)
 app.get('/api/pedidos', async (req, res) => {
     try {
         const result = await pgPool.query(`
             SELECT p.id_pedido, c.nombre, p.total, p.fecha_pedido, p.estado
             FROM pedidos p JOIN clientes c ON p.id_cliente = c.id_cliente
-            ORDER BY p.fecha_pedido DESC LIMIT 20
+            ORDER BY p.fecha_pedido DESC
         `);
         res.json(result.rows);
     } catch (error) {
@@ -145,10 +128,9 @@ app.get('/api/pedidos', async (req, res) => {
     }
 });
 
-// 3.7. Obtener todos los clientes (admin)
 app.get('/api/clientes', async (req, res) => {
     try {
-        const result = await pgPool.query('SELECT id_cliente, nombre, email, telefono FROM clientes ORDER BY id_cliente LIMIT 20');
+        const result = await pgPool.query('SELECT id_cliente, nombre, email, telefono FROM clientes ORDER BY id_cliente');
         res.json(result.rows);
     } catch (error) {
         console.error(error);
@@ -156,7 +138,6 @@ app.get('/api/clientes', async (req, res) => {
     }
 });
 
-// 3.8. Obtener todos los productos (admin)
 app.get('/api/productos-admin', async (req, res) => {
     try {
         const result = await pgPool.query('SELECT * FROM productos ORDER BY id_producto');
@@ -167,7 +148,6 @@ app.get('/api/productos-admin', async (req, res) => {
     }
 });
 
-// 3.9. Agregar comentario
 app.post('/api/comentario', async (req, res) => {
     try {
         const { id_cliente, texto } = req.body;
@@ -191,7 +171,6 @@ app.post('/api/comentario', async (req, res) => {
     }
 });
 
-// 3.10. Guardar preferencias
 app.post('/api/preferencias', async (req, res) => {
     try {
         const { id_cliente, preferencias } = req.body;
@@ -208,7 +187,6 @@ app.post('/api/preferencias', async (req, res) => {
     }
 });
 
-// 3.11. Login
 app.post('/api/login', async (req, res) => {
     try {
         const { email } = req.body;
@@ -221,7 +199,6 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-// 3.12. Registro
 app.post('/api/registro', async (req, res) => {
     try {
         const { nombre, email, telefono } = req.body;
@@ -241,7 +218,6 @@ app.post('/api/registro', async (req, res) => {
     }
 });
 
-// 3.13. Crear pedido
 app.post('/api/pedido', async (req, res) => {
     try {
         const { id_cliente, items } = req.body;
@@ -265,7 +241,6 @@ app.post('/api/pedido', async (req, res) => {
     }
 });
 
-// 3.14. Obtener pedidos de un cliente
 app.get('/api/mis-pedidos/:id_cliente', async (req, res) => {
     try {
         const id_cliente = parseInt(req.params.id_cliente);
@@ -280,7 +255,6 @@ app.get('/api/mis-pedidos/:id_cliente', async (req, res) => {
     }
 });
 
-// 3.15. Obtener perfil del cliente
 app.get('/api/perfil/:id_cliente', async (req, res) => {
     try {
         const id_cliente = parseInt(req.params.id_cliente);
@@ -296,7 +270,6 @@ app.get('/api/perfil/:id_cliente', async (req, res) => {
     }
 });
 
-// 3.16. Obtener comentarios de un cliente
 app.get('/api/mis-comentarios/:id_cliente', async (req, res) => {
     try {
         const id_cliente = parseInt(req.params.id_cliente);
@@ -308,7 +281,6 @@ app.get('/api/mis-comentarios/:id_cliente', async (req, res) => {
     }
 });
 
-// 3.17. Obtener preferencias de un cliente
 app.get('/api/mis-preferencias/:id_cliente', async (req, res) => {
     try {
         const id_cliente = parseInt(req.params.id_cliente);
@@ -320,9 +292,34 @@ app.get('/api/mis-preferencias/:id_cliente', async (req, res) => {
     }
 });
 
-// ============================================================
-// 4. INICIAR SERVIDOR
-// ============================================================
 app.listen(PORT, () => {
     console.log(`🚀 Servidor backend corriendo en http://localhost:${PORT}`);
+});
+
+app.post('/api/productos', async (req, res) => {
+    try {
+        const { nombre, precio, categoria } = req.body;
+        if (!nombre || !precio) {
+            return res.status(400).json({ error: 'Nombre y precio son obligatorios' });
+        }
+        const result = await pgPool.query(
+            'INSERT INTO productos (nombre, precio, categoria, activo) VALUES ($1, $2, $3, true) RETURNING *',
+            [nombre, precio, categoria || 'General']
+        );
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al agregar producto' });
+    }
+});
+
+app.delete('/api/productos/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        await pgPool.query('DELETE FROM productos WHERE id_producto = $1', [id]);
+        res.json({ success: true });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al eliminar producto' });
+    }
 });
