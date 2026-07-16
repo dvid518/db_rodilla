@@ -1,42 +1,57 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Catálogo - Cafetería Rodilla</title>
+    <title>Carrito - Cafetería Rodilla</title>
     <link rel="stylesheet" href="css/catalogo.css">
+    <link rel="stylesheet" href="css/header.css">
 </head>
+
 <body>
-<header class="topbar">
-    <div class="topbar-inner">
-        <div class="brand">Rodilla <span>Café</span></div>
-        <nav class="nav"></nav>
-    </div>
-</header>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <div class="brand">Rodilla <span>Café</span></div>
+            <nav class="nav"></nav>
+        </div>
+    </header>
 
-<main class="page">
-    <section class="hero hero-center">
-        <h1 class="hero-title">☕ Nuestros Productos</h1>
-        <p class="hero-sub">Descubre nuestra selección de café y más</p>
-    </section>
+    <main class="page">
+        <section class="hero">
+            <h1 class="hero-title">🛒 Mi Carrito</h1>
+            <p class="hero-sub">Revisa tus productos antes de comprar</p>
+        </section>
 
-    <section class="toolbar">
-        <input id="buscador" class="input" placeholder="🔍 Buscar productos...">
-        <select id="filtro" class="input select">
-            <option value="">📋 Todos</option>
-            <option value="Bebidas Calientes">☕ Bebidas Calientes</option>
-            <option value="Bebidas Frías">🧊 Bebidas Frías</option>
-            <option value="Comidas">🍔 Comidas</option>
-            <option value="Panadería">🥐 Panadería</option>
-            <option value="Postres">🍰 Postres</option>
-        </select>
-    </section>
+        <!-- Carrito vacío -->
+        <section id="empty" class="card" style="text-align:center; padding:40px; border-radius:14px; display:none;">
+            <div style="font-size:64px; margin-bottom:16px;">🛒</div>
+            <h3 style="margin:8px 0 4px; color:#2E5A3B;">Carrito vacío</h3>
+            <p class="hero-sub">No tienes productos en tu carrito. ¡Explora nuestro catálogo!</p>
+            <a href="catalogo.html" class="btn btn-primary" style="display:inline-block; margin-top:16px;">Ver
+                Catálogo</a>
+        </section>
 
-    <section id="grid" class="grid"></section>
-</main>
+        <!-- Lista de productos -->
+        <div id="list" class="list" style="display:none; gap:12px;"></div>
 
-<script type="module" src="js/config.js"></script>
-<script type="module" src="js/header.js"></script>
-<script type="module" src="js/catalogo.js"></script>
+        <!-- Resumen -->
+        <div id="summary" class="card"
+            style="display:none; margin-top:20px; padding:16px 20px; border-radius:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+            <div style="font-size:18px;">
+                <strong>💰 Total:</strong>
+                <span id="total" style="color:#2E5A3B; font-size:22px; font-weight:bold;">S/ 0.00</span>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn btn-secondary" type="button" onclick="window.vaciarCarrito()">🗑️ Vaciar</button>
+                <button class="btn btn-primary" type="button" onclick="window.comprar()">✅ Comprar</button>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="js/config.js"></script>
+    <script type="module" src="js/header.js"></script>
+    <script type="module" src="js/carrito.js"></script>
 </body>
+
 </html>
