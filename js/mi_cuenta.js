@@ -1,5 +1,9 @@
 import { API_URL } from './config.js';
 
+// ============================================================
+// FUNCIONES DE CARGA
+// ============================================================
+
 async function cargarPerfil() {
     const userId = localStorage.getItem('userId');
     if (!userId) {
@@ -8,19 +12,18 @@ async function cargarPerfil() {
     }
 
     try {
-        // 1. Datos del perfil
+        // 1. Perfil
         const perfilRes = await fetch(`${API_URL}/api/perfil/${userId}`);
         const perfil = await perfilRes.json();
-        if (perfil.error) {
-            console.error(perfil.error);
-            return;
+        if (!perfil.error) {
+            document.getElementById('nombre').textContent = perfil.nombre || 'Usuario';
+            document.getElementById('email').textContent = perfil.email || '-';
+            document.getElementById('telefono').textContent = perfil.telefono || '-';
+            document.getElementById('fecha').textContent = perfil.fecha_registro ? 
+                new Date(perfil.fecha_registro).toLocaleDateString() : '-';
         }
-        document.getElementById('nombre').textContent = perfil.nombre || 'Usuario';
-        document.getElementById('email').textContent = perfil.email || '-';
-        document.getElementById('telefono').textContent = perfil.telefono || '-';
-        document.getElementById('fecha').textContent = perfil.fecha_registro ? new Date(perfil.fecha_registro).toLocaleDateString() : '-';
 
-        // 2. Pedidos del cliente
+        // 2. Pedidos
         const pedidosRes = await fetch(`${API_URL}/api/mis-pedidos/${userId}`);
         const pedidos = await pedidosRes.json();
         const container = document.getElementById('pedidos');
@@ -29,7 +32,7 @@ async function cargarPerfil() {
             nop.style.display = 'none';
             container.style.display = 'flex';
             container.innerHTML = pedidos.map(p => `
-                <div class="pedido-item">
+                <div class="pedido-item" style="display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #eee;">
                     <span>#${p.id_pedido}</span>
                     <span>${new Date(p.fecha_pedido).toLocaleDateString()}</span>
                     <span>S/ ${parseFloat(p.total).toFixed(2)}</span>
@@ -40,7 +43,7 @@ async function cargarPerfil() {
             container.style.display = 'none';
         }
 
-        // 3. Comentarios del cliente
+        // 3. Comentarios
         const comentariosRes = await fetch(`${API_URL}/api/mis-comentarios/${userId}`);
         const comentarios = await comentariosRes.json();
         const lista = document.getElementById('listaComentarios');
@@ -48,9 +51,9 @@ async function cargarPerfil() {
         if (comentarios && comentarios.length > 0) {
             noCom.style.display = 'none';
             lista.innerHTML = comentarios.map(c => `
-                <div class="comentario-item">
+                <div class="comentario-item" style="background:#f9f9f9;padding:12px;border-radius:6px;border-left:3px solid #88B04B;">
                     <p>${c.texto}</p>
-                    <small>${c.fecha ? new Date(c.fecha).toLocaleDateString() : ''}</small>
+                    <small style="color:#8B6B4A;">${c.fecha ? new Date(c.fecha).toLocaleDateString() : ''}</small>
                 </div>
             `).join('');
         } else {
@@ -58,7 +61,7 @@ async function cargarPerfil() {
             lista.innerHTML = '';
         }
 
-        // 4. Preferencias del cliente
+        // 4. Preferencias
         const prefsRes = await fetch(`${API_URL}/api/mis-preferencias/${userId}`);
         const preferencias = await prefsRes.json();
         if (preferencias && !preferencias.error) {
@@ -72,11 +75,12 @@ async function cargarPerfil() {
         }
     } catch (error) {
         console.error('Error cargando perfil:', error);
-        alert('Error al cargar los datos del perfil');
     }
 }
 
-// Guardar preferencias
+// ============================================================
+// GUARDAR PREFERENCIAS
+// ============================================================
 document.getElementById('formPreferencias')?.addEventListener('submit', async function(e) {
     e.preventDefault();
     const userId = localStorage.getItem('userId');
@@ -96,24 +100,19 @@ document.getElementById('formPreferencias')?.addEventListener('submit', async fu
         const res = await fetch(`${API_URL}/api/preferencias`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                id_cliente: parseInt(userId),
-                preferencias
-            })
+            body: JSON.stringify({ id_cliente: parseInt(userId), preferencias })
         });
         const data = await res.json();
-        if (data.success) {
-            alert('Preferencias guardadas correctamente');
-        } else {
-            alert('Error al guardar preferencias');
-        }
+        alert(data.success ? '✅ Preferencias guardadas' : '❌ Error al guardar');
     } catch (error) {
         console.error('Error guardando preferencias:', error);
-        alert('Error de conexión');
+        alert('❌ Error de conexión');
     }
 });
 
-// Agregar comentario
+// ============================================================
+// AGREGAR COMENTARIO
+// ============================================================
 document.getElementById('formComentario')?.addEventListener('submit', async function(e) {
     e.preventDefault();
     const userId = localStorage.getItem('userId');
@@ -129,21 +128,18 @@ document.getElementById('formComentario')?.addEventListener('submit', async func
         const res = await fetch(`${API_URL}/api/comentario`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                id_cliente: parseInt(userId),
-                texto
-            })
+            body: JSON.stringify({ id_cliente: parseInt(userId), texto })
         });
         const data = await res.json();
         if (data.success) {
             document.getElementById('nuevoComentario').value = '';
-            cargarPerfil(); // Recargar comentarios
+            cargarPerfil();
         } else {
-            alert('Error al agregar comentario');
+            alert('❌ Error al agregar comentario');
         }
     } catch (error) {
         console.error('Error agregando comentario:', error);
-        alert('Error de conexión');
+        alert('❌ Error de conexión');
     }
 });
 

@@ -1,0 +1,155 @@
+/* ============================================================ */
+/* HEADER - TOPBAR */
+/* ============================================================ */
+.topbar {
+    background: #2E5A3B;
+    padding: 12px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.topbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.brand {
+    color: #FFF8E7;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.brand span {
+    color: #E8C84A;
+}
+
+/* ============================================================ */
+/* NAVEGACIÓN */
+/* ============================================================ */
+.nav {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.link {
+    color: #FFF8E7;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+.link:hover {
+    background: #88B04B;
+}
+
+/* ============================================================ */
+/* BOTONES */
+/* ============================================================ */
+.btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+    font-size: 15px;
+}
+
+.btn-primary {
+    background: #E8C84A;
+    color: #2E5A3B;
+}
+
+.btn-primary:hover {
+    background: #F4A7BB;
+    color: #fff;
+}
+
+.btn-secondary {
+    background: #8B6B4A;
+    color: #FFF8E7;
+}
+
+.btn-secondary:hover {
+    background: #6b5340;
+}
+
+/* ============================================================ */
+/* DROPDOWN - MI CUENTA */
+/* ============================================================ */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.btn-cuenta {
+    background: none;
+    border: none;
+    color: #FFF8E7;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.btn-cuenta:hover {
+    background: #88B04B;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: #FFF8E7;
+    min-width: 170px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 6px;
+    padding: 6px 0;
+    z-index: 1000;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 10px 16px;
+    color: #2E5A3B;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background: #F4A7BB;
+    color: #fff;
+}
+
+.dropdown-item.salir:hover {
+    background: #F4A7BB;
+    color: #fff;
+}

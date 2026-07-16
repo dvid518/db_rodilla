@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mi Cuenta - Cafetería Rodilla</title>
     <link rel="stylesheet" href="css/catalogo.css">
+    <link rel="stylesheet" href="css/header.css">
 </head>
 
-<body class="account-bg">
+<body>
     <header class="topbar">
         <div class="topbar-inner">
             <div class="brand">Rodilla <span>Café</span></div>
@@ -23,39 +24,41 @@
         </section>
 
         <div class="account-grid">
+            <!-- ============================================================ -->
+            <!-- 1. DATOS PERSONALES -->
+            <!-- ============================================================ -->
             <section class="card-white" style="padding:16px;">
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px">
-                    <div class="avatar">
-                        <img src="Iconos/usuario.png" class="avatar-icon" alt="Perfil">
-                    </div>
+                    <div class="avatar">👤</div>
                     <div>
-                        <div id="nombre" style="font-weight:800">Usuario</div>
+                        <div id="nombre" style="font-weight:800;color:#2E5A3B;">Usuario</div>
                         <div class="muted">Cliente</div>
                     </div>
                 </div>
-                <div class="muted">Email</div>
-                <div id="email" style="margin-bottom:8px">-</div>
-                <div class="muted">Teléfono</div>
-                <div id="telefono" style="margin-bottom:8px">-</div>
-                <div class="muted">Fecha de registro</div>
-                <div id="fecha">-</div>
+                <div class="muted">📧 Email</div>
+                <div id="email" style="margin-bottom:8px;color:#2E5A3B;">-</div>
+                <div class="muted">📱 Teléfono</div>
+                <div id="telefono" style="margin-bottom:8px;color:#2E5A3B;">-</div>
+                <div class="muted">📅 Fecha de registro</div>
+                <div id="fecha" style="color:#2E5A3B;">-</div>
             </section>
 
+            <!-- ============================================================ -->
+            <!-- 2. MIS PEDIDOS -->
+            <!-- ============================================================ -->
             <section class="card-white" style="padding:16px;">
-                <div class="block-title">
-                    <img src="Iconos/caja.png" class="section-icon" alt=""> Mis Pedidos
-                </div>
+                <div class="block-title">📦 Mis Pedidos</div>
                 <div id="nop" class="empty">
-                    <img src="Iconos/caja.png" class="empty-icon" alt="Sin pedidos">
                     <div>No tienes pedidos aún. ¡Explora nuestro catálogo!</div>
                 </div>
-                <div id="pedidos" class="list" style="margin-top:6px; gap:10px"></div>
+                <div id="pedidos" class="list" style="margin-top:6px; gap:10px; display:none;"></div>
             </section>
 
+            <!-- ============================================================ -->
+            <!-- 3. PREFERENCIAS -->
+            <!-- ============================================================ -->
             <section class="card-white" style="padding:16px;">
-                <div class="block-title">
-                    <img src="Iconos/engranaje.png" class="section-icon" alt=""> Preferencias
-                </div>
+                <div class="block-title">⚙️ Preferencias</div>
                 <form id="formPreferencias" style="margin-top:12px;">
                     <div style="margin-bottom:12px;">
                         <label class="muted" style="display:block; margin-bottom:4px;">Idioma</label>
@@ -91,26 +94,26 @@
                     </div>
                     <button type="submit" class="btn"
                         style="width:100%; padding:10px; background:#88B04B; color:white; border:none; border-radius:4px; cursor:pointer;">
-                        Guardar Preferencias
+                        💾 Guardar Preferencias
                     </button>
                 </form>
             </section>
 
+            <!-- ============================================================ -->
+            <!-- 4. MIS COMENTARIOS -->
+            <!-- ============================================================ -->
             <section class="card-white" style="padding:16px;">
-                <div class="block-title">
-                    <img src="Iconos/comentario.png" class="section-icon" alt=""> Mis Comentarios
-                </div>
+                <div class="block-title">💬 Mis Comentarios</div>
                 <form id="formComentario" style="margin-top:12px; margin-bottom:16px;">
                     <textarea id="nuevoComentario" placeholder="Escribe un comentario..."
                         style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px; min-height:80px; resize:vertical;"></textarea>
                     <button type="submit" class="btn"
                         style="margin-top:8px; width:100%; padding:10px; background:#E8C84A; color:#2E5A3B; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">
-                        Agregar Comentario
+                        ➕ Agregar Comentario
                     </button>
                 </form>
                 <div id="listaComentarios" style="display:flex; flex-direction:column; gap:10px;">
                     <div class="empty" id="noComentarios">
-                        <img src="Iconos/comentario.png" class="empty-icon" alt="Sin comentarios">
                         <div>No hay comentarios aún</div>
                     </div>
                 </div>
@@ -118,18 +121,9 @@
         </div>
     </main>
 
-    <script type="importmap">
-        {
-            "imports": {
-                "@neondatabase/serverless": "https://cdn.jsdelivr.net/npm/@neondatabase/serverless@0.10.0/+esm"
-            }
-        }
-        </script>
-    <script type="module" src="js/db-config.js"></script>
-    <script type="module" src="js/db-postgres.js"></script>
-    <script type="module" src="js/db-mongo.js"></script>
+    <script type="module" src="js/config.js"></script>
     <script type="module" src="js/header.js"></script>
-    <script type="module" src="js/catalogo.js"></script>
+    <script type="module" src="js/mi_cuenta.js"></script>
 </body>
 
 </html>

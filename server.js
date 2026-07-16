@@ -190,8 +190,16 @@ app.post('/api/preferencias', async (req, res) => {
 app.post('/api/login', async (req, res) => {
     try {
         const { email } = req.body;
-        const result = await pgPool.query('SELECT id_cliente, nombre, email FROM clientes WHERE email = $1', [email]);
-        if (result.rows.length === 0) return res.status(401).json({ error: 'Credenciales incorrectas' });
+        if (!email) {
+            return res.status(400).json({ error: 'Email es obligatorio' });
+        }
+        const result = await pgPool.query(
+            'SELECT id_cliente, nombre, email FROM clientes WHERE email = $1',
+            [email]
+        );
+        if (result.rows.length === 0) {
+            return res.status(401).json({ error: 'Email no registrado' });
+        }
         res.json(result.rows[0]);
     } catch (error) {
         console.error(error);
