@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+// conexion a postgresql (neon)
 const pgPool = new Pool({
     host: 'ep-jolly-bonus-acspto8k-pooler.sa-east-1.aws.neon.tech',
     database: 'neondb',
@@ -18,6 +19,7 @@ const pgPool = new Pool({
     ssl: { rejectUnauthorized: false }
 });
 
+// conexion a mongodb (atlas)
 const MONGO_URI = 'mongodb+srv://david_:F84IyNpiujGUPA2e@rodillacluster.xtchrmj.mongodb.net/?appName=RodillaCluster';
 const mongoClient = new MongoClient(MONGO_URI);
 let mongoDB;
@@ -33,6 +35,7 @@ async function conectarMongo() {
 }
 conectarMongo();
 
+// obtener todos los productos activos para el catalogo
 app.get('/api/productos', async (req, res) => {
     try {
         const result = await pgPool.query('SELECT * FROM productos WHERE activo = true ORDER BY nombre');
@@ -43,6 +46,7 @@ app.get('/api/productos', async (req, res) => {
     }
 });
 
+// obtener resumen de estadisticas para el panel admin
 app.get('/api/resumen', async (req, res) => {
     try {
         const ingresos = await pgPool.query('SELECT COALESCE(SUM(total), 0) as total FROM pedidos');
@@ -64,6 +68,7 @@ app.get('/api/resumen', async (req, res) => {
     }
 });
 
+// obtener los 5 pedidos mas recientes para el resumen del admin
 app.get('/api/pedidos-recientes', async (req, res) => {
     try {
         const result = await pgPool.query(`
@@ -78,6 +83,7 @@ app.get('/api/pedidos-recientes', async (req, res) => {
     }
 });
 
+// obtener clientes con sus comentarios desde mongodb (vista integrada)
 app.get('/api/clientes-integrado', async (req, res) => {
     try {
         const clientes = await pgPool.query('SELECT id_cliente, nombre, email, telefono FROM clientes ORDER BY id_cliente');
@@ -97,6 +103,7 @@ app.get('/api/clientes-integrado', async (req, res) => {
     }
 });
 
+// obtener un cliente especifico con sus comentarios y preferencias
 app.get('/api/cliente/:id', async (req, res) => {
     try {
         const id = parseInt(req.params.id);
@@ -114,6 +121,7 @@ app.get('/api/cliente/:id', async (req, res) => {
     }
 });
 
+// obtener todos los pedidos para el panel admin
 app.get('/api/pedidos', async (req, res) => {
     try {
         const result = await pgPool.query(`
@@ -128,6 +136,7 @@ app.get('/api/pedidos', async (req, res) => {
     }
 });
 
+// obtener todos los clientes para el panel admin
 app.get('/api/clientes', async (req, res) => {
     try {
         const result = await pgPool.query('SELECT id_cliente, nombre, email, telefono FROM clientes ORDER BY id_cliente');
@@ -138,6 +147,7 @@ app.get('/api/clientes', async (req, res) => {
     }
 });
 
+// obtener todos los productos para el panel admin
 app.get('/api/productos-admin', async (req, res) => {
     try {
         const result = await pgPool.query('SELECT * FROM productos ORDER BY id_producto');
@@ -148,6 +158,7 @@ app.get('/api/productos-admin', async (req, res) => {
     }
 });
 
+// agregar un nuevo comentario a un cliente en mongodb
 app.post('/api/comentario', async (req, res) => {
     try {
         const { id_cliente, texto } = req.body;
@@ -171,6 +182,7 @@ app.post('/api/comentario', async (req, res) => {
     }
 });
 
+// guardar preferencias de un cliente en mongodb
 app.post('/api/preferencias', async (req, res) => {
     try {
         const { id_cliente, preferencias } = req.body;
@@ -187,6 +199,7 @@ app.post('/api/preferencias', async (req, res) => {
     }
 });
 
+// iniciar sesion verificando el email en postgresql
 app.post('/api/login', async (req, res) => {
     try {
         const { email } = req.body;
@@ -207,6 +220,7 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+// registrar un nuevo usuario en postgresql y mongodb
 app.post('/api/registro', async (req, res) => {
     try {
         const { nombre, email, telefono } = req.body;
@@ -226,6 +240,7 @@ app.post('/api/registro', async (req, res) => {
     }
 });
 
+// crear un nuevo pedido con sus detalles
 app.post('/api/pedido', async (req, res) => {
     try {
         const { id_cliente, items } = req.body;
@@ -249,6 +264,7 @@ app.post('/api/pedido', async (req, res) => {
     }
 });
 
+// obtener los pedidos de un cliente especifico para mi cuenta
 app.get('/api/mis-pedidos/:id_cliente', async (req, res) => {
     try {
         const id_cliente = parseInt(req.params.id_cliente);
@@ -263,6 +279,7 @@ app.get('/api/mis-pedidos/:id_cliente', async (req, res) => {
     }
 });
 
+// obtener el perfil de un cliente para mi cuenta
 app.get('/api/perfil/:id_cliente', async (req, res) => {
     try {
         const id_cliente = parseInt(req.params.id_cliente);
@@ -278,6 +295,7 @@ app.get('/api/perfil/:id_cliente', async (req, res) => {
     }
 });
 
+// obtener los comentarios de un cliente desde mongodb
 app.get('/api/mis-comentarios/:id_cliente', async (req, res) => {
     try {
         const id_cliente = parseInt(req.params.id_cliente);
@@ -289,6 +307,7 @@ app.get('/api/mis-comentarios/:id_cliente', async (req, res) => {
     }
 });
 
+// obtener las preferencias de un cliente desde mongodb
 app.get('/api/mis-preferencias/:id_cliente', async (req, res) => {
     try {
         const id_cliente = parseInt(req.params.id_cliente);
@@ -300,10 +319,7 @@ app.get('/api/mis-preferencias/:id_cliente', async (req, res) => {
     }
 });
 
-app.listen(PORT, () => {
-    console.log(`🚀 Servidor backend corriendo en http://localhost:${PORT}`);
-});
-
+// agregar un nuevo producto desde el panel admin
 app.post('/api/productos', async (req, res) => {
     try {
         const { nombre, precio, categoria } = req.body;
@@ -321,6 +337,7 @@ app.post('/api/productos', async (req, res) => {
     }
 });
 
+// eliminar un producto desde el panel admin
 app.delete('/api/productos/:id', async (req, res) => {
     try {
         const id = parseInt(req.params.id);
@@ -330,4 +347,9 @@ app.delete('/api/productos/:id', async (req, res) => {
         console.error(error);
         res.status(500).json({ error: 'Error al eliminar producto' });
     }
+});
+
+// iniciar el servidor
+app.listen(PORT, () => {
+    console.log(`🚀 Servidor backend corriendo en http://localhost:${PORT}`);
 });
